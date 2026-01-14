@@ -44,7 +44,7 @@ async function getItems() {
             acc(
                 rows.map(item =>
                     Object.assign({}, item, {
-                        completed: item.complated === 1,
+                        completed: item.completed === 1,
                     }),
                 ),
             );
@@ -83,8 +83,8 @@ async function storeItem(item) {
 async function updateItem(id, item) {
     return new Promise((acc, rej) => {
         db.run(
-            'UPDATE todo_items SET name=?, completed=? WHERE id = ?',
-            [item.name, item.completed ? 1 : 0, id],
+            'UPDATE todo_items SET name=?, completed = NOT completed WHERE id = ?',
+            [item.name, id],
             err => {
                 if (err) return rej(err);
                 acc();
